@@ -722,6 +722,280 @@
       #allMap { height: 450px; }
       .compare-grid { grid-template-columns: 1fr; }
     }
+
+    /* Property-listing dashboard direction based on the selected reference. */
+    :root {
+      --navy: #10182d;
+      --blue: #079bb5;
+      --sky: #bfeef5;
+      --cream: #f2f5f6;
+      --ink: #111827;
+      --muted: #6b7280;
+      --line: #e1e7e9;
+      --green: #16816b;
+      --shadow: 0 12px 32px rgba(16, 24, 45, .08);
+    }
+    body {
+      padding-bottom: 0;
+      background: #eef2f3;
+    }
+    .announcement { display: none; }
+    nav {
+      top: 0;
+      min-height: 68px;
+      border-bottom-color: rgba(208, 220, 223, .75);
+      background: rgba(247, 251, 251, .92);
+    }
+    .brand-mark {
+      border-radius: 10px 3px 10px 3px;
+      background: linear-gradient(145deg, #08abc5 50%, #111827 50%);
+    }
+    nav a:hover { color: #057d93; background: #e5f5f7; }
+    .hero {
+      min-height: 470px;
+      padding-top: 8.2rem;
+      padding-bottom: 3.5rem;
+      background:
+        radial-gradient(circle at 68% 66%, rgba(181, 245, 170, .42), transparent 24rem),
+        linear-gradient(120deg, #edf5f6 0%, #e8f1ee 52%, #cceefa 100%);
+    }
+    .hero-grid {
+      display: grid;
+      max-width: 1280px;
+      grid-template-columns: minmax(0, 1.05fr) minmax(460px, .95fr);
+      gap: 4rem;
+      align-items: center;
+      text-align: left;
+    }
+    .hero-grid > div:first-child { max-width: 700px; margin: 0; }
+    .hero .eyebrow { justify-content: flex-start; color: #087e93; }
+    h1 {
+      margin-inline: 0;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      line-height: 1;
+    }
+    .hero-copy {
+      max-width: 620px;
+      margin: 1.2rem 0 0;
+      color: #596274;
+    }
+    .hero-actions { justify-content: flex-start; margin-top: 1.4rem; }
+    .hero-cta {
+      min-height: 48px;
+      padding-inline: 1.25rem;
+      background: #111827;
+      box-shadow: none;
+    }
+    .hero-cta:hover { box-shadow: 0 10px 22px rgba(17, 24, 39, .18); }
+    .hero-stats {
+      max-width: none;
+      margin: 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .7rem;
+    }
+    .hero-stat {
+      min-height: 122px;
+      align-items: flex-start;
+      padding: 1.1rem;
+      border: 1px solid rgba(255, 255, 255, .76);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .68) !important;
+      box-shadow: 0 8px 22px rgba(38, 77, 84, .06);
+      text-align: left;
+    }
+    .hero-stat strong { margin-bottom: .5rem; font-size: 1.8rem; }
+    main {
+      display: flex;
+      width: min(1380px, calc(100% - 2rem));
+      flex-direction: column;
+      margin-top: 0;
+    }
+    .notice { order: 0; }
+    #apartments { order: 1; }
+    #map-overview { order: 2; }
+    #calculator { order: 3; }
+    #comparison { order: 4; }
+    .notice {
+      margin-top: 1rem;
+      border-left: 4px solid #e2a12b;
+      background: #fff;
+      box-shadow: 0 5px 16px rgba(16, 24, 45, .04);
+    }
+    .section {
+      margin-top: 1rem;
+      padding: 3.25rem 1.5rem;
+      border-radius: 20px;
+      background: #fff !important;
+      scroll-margin-top: 78px;
+    }
+    #apartments { padding-inline: 1.5rem; }
+    .section-head {
+      justify-content: flex-start;
+      margin: 0 0 1.35rem;
+      text-align: left;
+    }
+    .section-head > div { max-width: 760px; margin: 0; }
+    .section-head .eyebrow { justify-content: flex-start; }
+    .section-head h2 {
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      letter-spacing: -.045em;
+    }
+    .section-head p { margin-inline: 0; }
+    .explorer-layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+    .listing-content { min-width: 0; }
+    .filters {
+      position: sticky;
+      top: 82px;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .9rem;
+      padding: 1.1rem;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 10px 26px rgba(16, 24, 45, .06);
+    }
+    .filters::before {
+      padding-bottom: .75rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      content: "Filters";
+      font: 800 1rem/1 "Manrope", sans-serif;
+    }
+    .filters .btn { width: 100%; background: #111827; }
+    .results-bar {
+      min-height: 42px;
+      margin: 0 0 .75rem;
+      padding: .65rem .8rem;
+      border-radius: 12px;
+      color: #596274;
+      background: #f3f6f7;
+      align-items: center;
+    }
+    #resultCount { color: var(--ink); font-weight: 800; }
+    .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+    .card {
+      min-height: 350px;
+      padding: .6rem;
+      border: 1px solid #e1e7e9;
+      border-radius: 16px;
+      box-shadow: 0 5px 14px rgba(16, 24, 45, .04);
+    }
+    .card:hover, .card.active {
+      transform: translateY(-3px);
+      border-color: #9adce6;
+      box-shadow: 0 15px 30px rgba(16, 24, 45, .1);
+    }
+    .card-visual {
+      position: relative;
+      display: flex;
+      min-height: 128px;
+      justify-content: space-between;
+      align-items: flex-start;
+      overflow: hidden;
+      padding: .8rem;
+      border-radius: 12px;
+      color: #10222b;
+      background:
+        radial-gradient(circle at 82% 28%, rgba(255,255,255,.85) 0 5%, transparent 5.5%),
+        radial-gradient(circle at 72% 62%, rgba(255,255,255,.65) 0 12%, transparent 12.5%),
+        linear-gradient(135deg, #bde8f2, #d8f4dd);
+    }
+    .card-visual::after {
+      position: absolute;
+      right: -10%;
+      bottom: -42%;
+      width: 70%;
+      aspect-ratio: 1;
+      border: 18px solid rgba(255,255,255,.35);
+      border-radius: 50%;
+      content: "";
+    }
+    .card-visual.visual-1 { background: linear-gradient(135deg, #d5e9ff, #c8f4eb); }
+    .card-visual.visual-2 { background: linear-gradient(135deg, #f5e4cc, #e9f2d3); }
+    .card-visual.visual-3 { background: linear-gradient(135deg, #dce0fa, #d1f0f7); }
+    .card-visual.visual-4 { background: linear-gradient(135deg, #d9f0de, #f0e4ca); }
+    .card-visual.visual-5 { background: linear-gradient(135deg, #f0dfe9, #d8eafa); }
+    .visual-number {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,.8);
+      font-size: .72rem;
+      font-weight: 800;
+    }
+    .visual-area {
+      position: relative;
+      z-index: 1;
+      max-width: 65%;
+      padding: .32rem .48rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      font-size: .64rem;
+      font-weight: 800;
+      text-align: right;
+    }
+    .card-top {
+      flex-direction: row;
+      padding: .8rem .45rem 0;
+      align-items: flex-start;
+    }
+    .card .number { display: none; }
+    .card h3 { font-size: .98rem; }
+    .price {
+      padding: 0;
+      color: #0b725d;
+      background: transparent;
+      font-size: .73rem;
+      text-align: right;
+    }
+    .address, .rent-detail, .tags, .card-actions { margin-inline: .45rem; }
+    .address { min-height: 2.3em; }
+    .rent-detail { min-height: 3.65em; }
+    .tag { background: #edf3f4; }
+    .card-actions { margin-top: .7rem; padding-top: .6rem; }
+    .overview-map-panel { border: 1px solid var(--line); border-radius: 16px; box-shadow: none; }
+    #allMap { height: 530px; }
+    #calculator { background: #f4f8f8 !important; }
+    .calculator { border: 1px solid var(--line); box-shadow: none; }
+    #comparison { background: #f4f8f8 !important; }
+    .cost-box, .compare { border: 1px solid var(--line); background: #fff !important; }
+    footer { padding-bottom: 3rem; background: #10182d; }
+    @media (max-width: 1120px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 2.4rem; }
+      .hero-stats { max-width: 760px; }
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      body { padding-bottom: 72px; }
+      .hero { padding-top: 7rem; }
+      .hero h1 { font-size: clamp(2.5rem, 12vw, 4rem); }
+      .explorer-layout { grid-template-columns: 1fr; }
+      .filters {
+        position: static;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .filters::before, .filters .btn { grid-column: 1 / -1; }
+      .mobile-dock { display: grid; }
+    }
+    @media (max-width: 560px) {
+      main { width: min(100% - .7rem, 1380px); }
+      .section { padding: 2.4rem .7rem; }
+      .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cards, .filters { grid-template-columns: 1fr; }
+      .filters::before, .filters .btn { grid-column: auto; }
+      .card { min-height: 330px; }
+      .card-visual { min-height: 145px; }
+    }
   </style>
 </head>
 <body>
@@ -735,9 +1009,9 @@
     <div class="hero-grid">
       <div>
         <p class="eyebrow">University Park · 2027–28 planning dashboard</p>
-        <h1>Dorm or off-campus? Compare the full-year cost.</h1>
-        <p class="hero-copy">Search 50 State College properties, scan commute options, and model the actual cost against an editable campus housing benchmark.</p>
-        <div class="hero-actions"><a class="hero-cta" href="#apartments">Explore accommodations <span aria-hidden="true">&nbsp;→</span></a></div>
+        <h1>Find student housing that fits your budget.</h1>
+        <p class="hero-copy">Explore State College apartments by price, neighborhood and commute, then compare the full-year cost with campus housing.</p>
+        <div class="hero-actions"><a class="hero-cta" href="#apartments">Browse 50 properties <span aria-hidden="true">&nbsp;→</span></a></div>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><strong>50</strong><span>properties researched</span></div>
@@ -771,15 +1045,19 @@
       <div class="section-head">
         <div><p class="eyebrow" style="color:#1e407c">Apartment explorer</p><h2>Search all 50 options</h2><p>“From” prices are approximate monthly per-student costs used only for filtering. Read each listing to see whether the advertised rent is per bed or for the whole unit.</p></div>
       </div>
-      <div class="filters panel">
-        <label>Search name or address<input id="search" type="search" placeholder="Try Beaver, Atherton, 2BR…"></label>
-        <label>Area<select id="area"><option value="">All areas</option></select></label>
-        <label>Max from-price / student<select id="maxPrice"><option value="">Any price</option><option value="750">$750</option><option value="900">$900</option><option value="1100">$1,100</option><option value="1400">$1,400</option></select></label>
-        <label>Furnishing<select id="furnished"><option value="">Any</option><option value="yes">Furnished</option><option value="no">Unfurnished</option><option value="mixed">Options / unclear</option></select></label>
-        <button class="btn" id="reset">Reset</button>
+      <div class="explorer-layout">
+        <div class="filters panel">
+          <label>Search name or address<input id="search" type="search" placeholder="Beaver, Atherton, 2BR…"></label>
+          <label>Area<select id="area"><option value="">All areas</option></select></label>
+          <label>Maximum price / student<select id="maxPrice"><option value="">Any price</option><option value="750">$750</option><option value="900">$900</option><option value="1100">$1,100</option><option value="1400">$1,400</option></select></label>
+          <label>Furnishing<select id="furnished"><option value="">Any</option><option value="yes">Furnished</option><option value="no">Unfurnished</option><option value="mixed">Options / unclear</option></select></label>
+          <button class="btn" id="reset">Clear filters</button>
+        </div>
+        <div class="listing-content">
+          <div class="results-bar"><span id="resultCount">50 properties</span><span>Choose “View on map” to locate a property below</span></div>
+          <div class="cards" id="cards"></div>
+        </div>
       </div>
-      <div class="results-bar"><span id="resultCount">50 properties</span><span>Choose “View on map” to locate a property above</span></div>
-      <div class="cards" id="cards"></div>
     </section>
 
     <section class="section" id="calculator">
@@ -971,6 +1249,7 @@
       document.querySelector("#resultCount").textContent = `${filtered.length} ${filtered.length === 1 ? "property" : "properties"}`;
       cards.innerHTML = filtered.length ? filtered.map(p => `
         <article class="card" data-index="${p.i}">
+          <div class="card-visual visual-${p.i % 6}"><span class="visual-number">#${p.i + 1}</span><span class="visual-area">${p.z}</span></div>
           <div class="card-top"><div><span class="number">#${p.i + 1}</span><h3>${p.n}</h3></div><span class="price">${p.p === null ? "Call for price" : `From ~${fmt(p.p)}/student`}</span></div>
           <p class="address">${p.a}</p><p class="rent-detail">${p.r}</p>
           <div class="tags"><span class="tag green">${p.c}</span><span class="tag">${p.f === "yes" ? "Furnished" : p.f === "no" ? "Unfurnished" : "Options / verify"}</span><span class="tag amber">${p.u}</span></div>
