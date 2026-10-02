@@ -13,7 +13,7 @@ An interactive, static web application comparing 50 private apartment options ne
 - Editable per-semester dorm and meal-plan benchmark
 - Grocery and one-time furniture estimates
 - Year-2 dorm versus apartment advantages and trade-offs
-- Modern dashboard interface with compact filters and data-forward property cards
+- Student-first, mobile-led visual system with pastel feature sections and compact data cards
 - Responsive layout, keyboard focus states and reduced-motion support
 
 ## Open the application
