@@ -1,4 +1,4 @@
-# Penn State Housing Analysis
+# Penn State Housing: Dorm vs. Off-Campus
 
 An interactive, static web application comparing 50 private apartment options near Penn State University Park with the cost of a traditional dorm and dining plan.
 
