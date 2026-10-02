@@ -166,7 +166,7 @@
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><strong>50</strong><span>properties researched</span></div>
-        <div class="hero-stat"><strong>$14,634</strong><span>2027–28 dorm benchmark</span></div>
+        <div class="hero-stat"><strong id="heroDormBenchmark">$14,634</strong><span>editable dorm benchmark</span></div>
         <div class="hero-stat"><strong>~$280</strong><span>monthly groceries</span></div>
         <div class="hero-stat"><strong>$850–900</strong><span>monthly break-even rent</span></div>
       </div>
@@ -218,6 +218,8 @@
             <label>Monthly utilities ($)<input id="calcUtilities" type="number" min="0" value="50"></label>
             <label>One-time furniture/setup ($)<input id="calcFurniture" type="number" min="0" value="200"></label>
             <label>Other annual fees ($)<input id="calcFees" type="number" min="0" value="200"></label>
+            <label>Dorm room / semester ($)<input id="calcDorm" type="number" min="0" value="4254"></label>
+            <label>Meal plan / semester ($)<input id="calcMeal" type="number" min="0" value="3063"></label>
           </div>
         </div>
         <div class="calc-result">
@@ -229,7 +231,7 @@
             <tr><td>Groceries</td><td id="groceryTotal">$3,360</td></tr>
             <tr><td>Utilities</td><td id="utilityTotal">$600</td></tr>
             <tr><td>Setup + fees</td><td id="setupTotal">$400</td></tr>
-            <tr><td>2027–28 dorm + dining benchmark</td><td>$14,634</td></tr>
+            <tr><td>Editable dorm + dining benchmark</td><td id="dormBenchmarkTotal">$14,634</td></tr>
           </table>
         </div>
       </div>
@@ -240,8 +242,8 @@
         <div><p class="eyebrow" style="color:#1e407c">Year-2 decision</p><h2>Dorm or private apartment?</h2></div>
       </div>
       <div class="cost-strip">
-        <div class="cost-box"><span>Dorm, two semesters</span><strong>$8,508</strong></div>
-        <div class="cost-box"><span>Signature dining plan</span><strong>$6,126</strong></div>
+        <div class="cost-box"><span>Dorm, two semesters</span><strong id="annualDormCost">$8,508</strong></div>
+        <div class="cost-box"><span>Meal plan, two semesters</span><strong id="annualMealCost">$6,126</strong></div>
         <div class="cost-box"><span>Apartment groceries</span><strong>~$3,360/year</strong></div>
         <div class="cost-box"><span>Unfurnished setup</span><strong>~$515–1,200</strong></div>
       </div>
@@ -355,16 +357,21 @@
       area.value = ""; document.querySelector("#maxPrice").value = ""; document.querySelector("#furnished").value = ""; render();
     });
 
-    const calcIds = ["calcRent","calcMonths","calcGroceries","calcUtilities","calcFurniture","calcFees"];
+    const calcIds = ["calcRent","calcMonths","calcGroceries","calcUtilities","calcFurniture","calcFees","calcDorm","calcMeal"];
     function calculate() {
-      const [rent, months, groceries, utilities, furniture, fees] = calcIds.map(id => Math.max(0, Number(document.querySelector(`#${id}`).value) || 0));
+      const [rent, months, groceries, utilities, furniture, fees, dormPerSemester, mealPerSemester] = calcIds.map(id => Math.max(0, Number(document.querySelector(`#${id}`).value) || 0));
       const rentTotal = rent * months, groceryTotal = groceries * months, utilityTotal = utilities * months, setupTotal = furniture + fees;
-      const total = rentTotal + groceryTotal + utilityTotal + setupTotal, dorm = 14634, difference = Math.abs(dorm - total);
+      const annualDorm = dormPerSemester * 2, annualMeal = mealPerSemester * 2, dorm = annualDorm + annualMeal;
+      const total = rentTotal + groceryTotal + utilityTotal + setupTotal, difference = Math.abs(dorm - total);
       document.querySelector("#calcTotal").textContent = fmt(total);
       document.querySelector("#rentTotal").textContent = fmt(rentTotal);
       document.querySelector("#groceryTotal").textContent = fmt(groceryTotal);
       document.querySelector("#utilityTotal").textContent = fmt(utilityTotal);
       document.querySelector("#setupTotal").textContent = fmt(setupTotal);
+      document.querySelector("#heroDormBenchmark").textContent = fmt(dorm);
+      document.querySelector("#dormBenchmarkTotal").textContent = fmt(dorm);
+      document.querySelector("#annualDormCost").textContent = fmt(annualDorm);
+      document.querySelector("#annualMealCost").textContent = fmt(annualMeal);
       const delta = document.querySelector("#calcDelta");
       delta.className = `delta ${total <= dorm ? "save" : "cost"}`;
       delta.textContent = `${fmt(difference)} ${total <= dorm ? "below" : "above"} the dorm benchmark`;

@@ -8,7 +8,7 @@ An interactive, static web application comparing 50 private apartment options ne
 - Latest advertised rent with per-bed versus per-unit labeling
 - Google Maps preview and direct map links
 - Interactive first-year cost calculator
-- 2027–28 dorm and dining benchmark
+- Editable per-semester dorm and meal-plan benchmark
 - Grocery and one-time furniture estimates
 - Year-2 dorm versus apartment advantages and trade-offs
 - Responsive layout for desktop and mobile
