@@ -5,6 +5,8 @@ An interactive, static web application comparing 50 private apartment options ne
 ## Features
 
 - Search and filter 50 State College housing options
+- Clustered interactive OpenStreetMap with all 50 numbered property pins
+- Google Maps and leasing-site links in every map popup
 - Latest advertised rent with per-bed versus per-unit labeling
 - Google Maps preview and direct map links
 - Interactive first-year cost calculator

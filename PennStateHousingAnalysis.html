@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <style>
     :root {
       --navy: #001e44;
@@ -107,6 +110,24 @@
     .card-actions { display: flex; gap: .6rem; margin-top: .9rem; }
     .text-btn { border: 0; background: none; color: var(--blue); padding: 0; cursor: pointer; font-weight: 700; font-size: .83rem; text-decoration: none; }
     .map-panel { position: sticky; top: 1rem; overflow: hidden; }
+    .overview-map-panel { overflow: hidden; box-shadow: none; }
+    #allMap { width: 100%; height: 610px; background: #e6edf5; }
+    .overview-selection {
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem; border-top: 1px solid var(--line);
+    }
+    .overview-selection strong { display: block; color: var(--navy); }
+    .overview-selection span { color: var(--muted); font-size: .82rem; }
+    .property-pin {
+      display: grid; place-items: center; width: 30px !important; height: 30px !important;
+      margin: -15px 0 0 -15px !important; border: 3px solid white; border-radius: 50%;
+      color: white; background: var(--blue); box-shadow: 0 4px 12px rgba(0,30,68,.35);
+      font: 700 11px/1 "DM Sans", sans-serif;
+    }
+    .leaflet-popup-content { margin: 1rem; font-family: "DM Sans", sans-serif; line-height: 1.45; }
+    .leaflet-popup-content strong { color: var(--navy); font-size: 1rem; }
+    .leaflet-popup-content p { margin: .35rem 0 .65rem; color: #475467; }
+    .leaflet-popup-content a { color: var(--blue); font-weight: 700; text-decoration: none; margin-right: .8rem; }
     .map-info { padding: 1.25rem; }
     .map-info h3 { margin: 0 0 .35rem; color: var(--navy); font-size: 1.4rem; }
     .map-info p { margin: .3rem 0; color: var(--muted); line-height: 1.5; font-size: .88rem; }
@@ -149,6 +170,8 @@
       .card-top { flex-direction: column; gap: .35rem; }
       .price { white-space: normal; }
       iframe { height: 325px; }
+      #allMap { height: 480px; }
+      .overview-selection { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
@@ -178,6 +201,19 @@
       <span class="notice-icon">!</span>
       <p><strong>Planning estimates, not lease offers.</strong> Most landlords have not published binding 2027–28 rates. Prices shown are the latest advertised figures found in October 2026. Allow 3%–6% where a Fall 2027 rate is not confirmed, and verify rent, fees, utilities, lease dates and availability directly with the property.</p>
     </aside>
+
+    <section class="section" id="map-overview">
+      <div class="section-head">
+        <div><p class="eyebrow" style="color:#1e407c">Location overview</p><h2>Explore all 50 properties on one map</h2><p>Zoom into a neighborhood or select a numbered pin. Nearby pins cluster automatically; click a cluster to expand it. Every property popup links directly to Google Maps and the leasing website.</p></div>
+      </div>
+      <div class="overview-map-panel panel">
+        <div id="allMap" role="application" aria-label="Interactive map of 50 private properties near Penn State University Park"></div>
+        <div class="overview-selection">
+          <div><strong id="overviewTitle">50 properties near Penn State University Park</strong><span id="overviewDetail">Select any numbered pin to see property details.</span></div>
+          <button class="btn" id="resetMap">Show all properties</button>
+        </div>
+      </div>
+    </section>
 
     <section class="section" id="apartments">
       <div class="section-head">
@@ -258,6 +294,8 @@
 
   <footer>Independent planning tool · Not affiliated with Penn State University · Verify all prices and terms with the property before signing.</footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script>
     const properties = [
       {n:"The Graduate",a:"138 S Atherton St, State College, PA",z:"Atherton",c:"~8 min walk",r:"1BR $1,704–1,764; 2BR $2,657–3,120 per unit",p:1329,f:"yes",u:"Furnished; many utilities included",s:"https://www.gnrealty.com/the-graduate/"},
@@ -311,6 +349,8 @@
       {n:"Aspen State College",a:"350 Squirrel Dr, State College, PA",z:"South / Waupelani",c:"~10–15 min bus",r:"1BR $2,420 per unit; 2BR $1,375–1,430; 4BR $899–1,199 per bed",p:899,f:"yes",u:"Furnished student layouts",s:"https://www.aspenstatecollege.com/"},
       {n:"The Yards at Old State",a:"1830 Blue Course Dr, State College, PA",z:"West / Blue Course",c:"CATA; likely over 10 min door-to-door",r:"2BR approximately $1,600; 3BR $1,099–1,105 per bed",p:1099,f:"yes",u:"Furnished",s:"https://www.theyardsatoldstate.com/"}
     ];
+    const coordinates = [[40.7908774,-77.8642012],[40.7902863,-77.8624181],[40.7856944,-77.8574596],[40.7886587,-77.8604042],[40.7848255,-77.8438477],[40.8106051,-77.8926551],[40.8176134,-77.8884819],[40.8173860,-77.8894400],[40.8109080,-77.8904766],[40.8233252,-77.8916517],[40.7976254,-77.8539789],[40.7919421,-77.8621556],[40.7959538,-77.8573063],[40.7961231,-77.8562702],[40.7963771,-77.8566745],[40.7986733,-77.8537068],[40.7971084,-77.8557109],[40.8002425,-77.8515558],[40.7998509,-77.8520459],[40.7985477,-77.8541192],[40.8010251,-77.8520124],[40.7866826,-77.8712855],[40.7884404,-77.8691528],[40.7915925,-77.8659430],[40.7877278,-77.8505971],[40.7988031,-77.8552829],[40.7939195,-77.8588858],[40.7952682,-77.8575324],[40.7975870,-77.8557278],[40.7916285,-77.8606844],[40.7913431,-77.8651939],[40.7969437,-77.8567535],[40.7999528,-77.8537398],[40.7993043,-77.8536709],[40.7800838,-77.8546592],[40.8038581,-77.8974806],[40.7989429,-77.8484831],[40.8012193,-77.8459647],[40.7983798,-77.8882139],[40.7842643,-77.8525029],[40.7944972,-77.8613646],[40.7913867,-77.8528337],[40.7779928,-77.8525138],[40.7895581,-77.8585604],[40.7942652,-77.8554506],[40.8236921,-77.8845570],[40.7798003,-77.8505495],[40.7879390,-77.8970518],[40.8067401,-77.8331614],[40.7684881,-77.8604157]];
+    properties.forEach((property, index) => [property.lat, property.lng] = coordinates[index]);
 
     const cards = document.querySelector("#cards");
     const area = document.querySelector("#area");
@@ -323,6 +363,33 @@
     function googleUrl(address) {
       return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
     }
+    const overviewMap = L.map("allMap", {scrollWheelZoom: false}).setView([40.7982, -77.8599], 13);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(overviewMap);
+    const markerLayer = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 35});
+    const overviewMarkers = [];
+    properties.forEach((p, index) => {
+      const icon = L.divIcon({className: "property-pin", html: String(index + 1), iconSize: [30, 30]});
+      const marker = L.marker([p.lat, p.lng], {icon, title: p.n});
+      marker.bindPopup(`<strong>#${index + 1} ${p.n}</strong><p>${p.a}<br>${p.c}<br>${p.r}</p><a href="${googleUrl(p.a)}" target="_blank" rel="noopener">Google Maps ↗</a><a href="${p.s}" target="_blank" rel="noopener">Property site ↗</a>`);
+      marker.on("click", () => {
+        document.querySelector("#overviewTitle").textContent = `#${index + 1} ${p.n}`;
+        document.querySelector("#overviewDetail").textContent = `${p.c} · ${p.a}`;
+      });
+      overviewMarkers.push(marker);
+      markerLayer.addLayer(marker);
+    });
+    markerLayer.addTo(overviewMap);
+    const overviewBounds = L.latLngBounds(properties.map(p => [p.lat, p.lng]));
+    overviewMap.fitBounds(overviewBounds, {padding: [28, 28]});
+    document.querySelector("#resetMap").addEventListener("click", () => {
+      overviewMap.closePopup();
+      overviewMap.fitBounds(overviewBounds, {padding: [28, 28]});
+      document.querySelector("#overviewTitle").textContent = "50 properties near Penn State University Park";
+      document.querySelector("#overviewDetail").textContent = "Select any numbered pin to see property details.";
+    });
     function selectProperty(index) {
       const p = properties[index];
       document.querySelectorAll(".card").forEach(el => el.classList.toggle("active", Number(el.dataset.index) === index));
