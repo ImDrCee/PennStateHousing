@@ -1255,18 +1255,16 @@
       box-shadow: 0 4px 14px rgba(18,128,92,.38);
       font-size: 9px;
     }
-    .marker-cluster-small,
-    .marker-cluster-medium,
-    .marker-cluster-large {
-      background: rgba(58,58,60,.22);
-    }
-    .marker-cluster-small div,
-    .marker-cluster-medium div,
-    .marker-cluster-large div {
+    .housing-cluster { background: rgba(58,58,60,.2); }
+    .housing-cluster div {
       color: #fff;
       background: #3a3a3c;
       font-weight: 750;
     }
+    .housing-cluster.cluster-blue { background: rgba(0,113,227,.18); }
+    .housing-cluster.cluster-blue div { background: #65acef; }
+    .housing-cluster.cluster-green { background: rgba(18,128,92,.18); }
+    .housing-cluster.cluster-green div { background: #62b89a; }
     .map-legend {
       display: flex;
       flex-wrap: wrap;
@@ -1281,7 +1279,9 @@
     .map-legend span { display: inline-flex; align-items: center; gap: .42rem; }
     .legend-dot { width: 10px; height: 10px; border-radius: 50%; background: #0071e3; }
     .legend-dot.campus { background: #12805c; }
-    .legend-dot.cluster { background: #3a3a3c; }
+    .legend-dot.cluster-blue { background: #65acef; }
+    .legend-dot.cluster-green { background: #62b89a; }
+    .legend-dot.cluster-mixed { background: #3a3a3c; }
     .housing-type {
       display: inline-flex;
       width: fit-content;
@@ -1446,7 +1446,7 @@
       </div>
       <div class="overview-map-panel panel">
         <div id="allMap" role="application" aria-label="Interactive map of Penn State on-campus and private off-campus housing options"></div>
-        <div class="map-legend" aria-label="Map pin legend"><span><i class="legend-dot campus"></i>On-campus housing area</span><span><i class="legend-dot"></i>Off-campus property</span><span><i class="legend-dot cluster"></i>Grouped nearby pins</span></div>
+        <div class="map-legend" aria-label="Map pin legend"><span><i class="legend-dot campus"></i>On-campus housing area</span><span><i class="legend-dot"></i>Off-campus property</span><span><i class="legend-dot cluster-green"></i>Grouped campus pins</span><span><i class="legend-dot cluster-blue"></i>Grouped off-campus pins</span><span><i class="legend-dot cluster-mixed"></i>Mixed group</span></div>
         <div class="overview-selection">
           <div><strong id="overviewTitle">58 housing options near Penn State University Park</strong><span id="overviewDetail">Select a green campus pin or blue property pin for details.</span></div>
           <button class="btn" id="resetMap" type="button">Show all housing</button>
@@ -1688,12 +1688,24 @@
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(overviewMap);
-    const markerLayer = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 35});
+    const markerLayer = L.markerClusterGroup({
+      showCoverageOnHover: false,
+      maxClusterRadius: 35,
+      iconCreateFunction(cluster) {
+        const types = new Set(cluster.getAllChildMarkers().map(marker => marker.options.housingType));
+        const category = types.size === 1 ? (types.has("campus") ? "green" : "blue") : "mixed";
+        return L.divIcon({
+          className: `marker-cluster housing-cluster cluster-${category}`,
+          html: `<div><span>${cluster.getChildCount()}</span></div>`,
+          iconSize: L.point(40, 40)
+        });
+      }
+    });
     const overviewMarkers = [];
     properties.forEach((p, index) => {
       const label = optionLabel(p, index);
       const icon = L.divIcon({className: `property-pin ${p.t === "campus" ? "on-campus" : ""}`, html: label, iconSize: [30, 30]});
-      const marker = L.marker([p.lat, p.lng], {icon, title: p.n});
+      const marker = L.marker([p.lat, p.lng], {icon, title: p.n, housingType: p.t});
       marker.bindPopup(`<strong>${label} ${p.n}</strong><p>${p.t === "campus" ? "On-campus housing area" : "Off-campus property"}<br>${p.a}<br>${p.r}</p><a href="${googleUrl(p.t === "campus" ? `${p.lat},${p.lng}` : p.a)}" target="_blank" rel="noopener">Google Maps ↗</a><a href="${p.s}" target="_blank" rel="noopener">${p.t === "campus" ? "Housing details" : "Property site"} ↗</a>`);
       marker.on("click", () => {
         document.querySelector("#overviewTitle").textContent = `${label} ${p.n}`;
