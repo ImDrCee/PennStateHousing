@@ -9,8 +9,9 @@ An interactive, static web application comparing 50 private apartment options ne
 - Google Maps and leasing-site links in every map popup
 - Latest advertised rent with per-bed versus per-unit labeling
 - Google Maps preview and direct map links
-- Interactive first-year cost calculator
-- Editable per-semester dorm and meal-plan benchmark
+- Interactive full-lease off-campus cost calculator
+- Selectable official 2026–27 returning-student housing and Campus Meal Plan rates
+- Nittany and White Course apartment scenarios with an optional self-catered food estimate
 - Grocery and one-time furniture estimates
 - Year-2 dorm versus apartment advantages and trade-offs
 - Apple-inspired interface with system typography, restrained translucent materials, and immediate press feedback

@@ -1254,6 +1254,38 @@
       border-radius: 22px;
       background: rgba(255,255,255,.82) !important;
     }
+    .housing-guidance {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .85rem;
+      margin-bottom: 1rem;
+      padding: 1rem 1.1rem;
+      border: 1px solid rgba(0,113,227,.14);
+      border-radius: 18px;
+      background: rgba(232,244,255,.72);
+    }
+    .housing-guidance strong { display: block; margin-bottom: .25rem; }
+    .housing-guidance p { margin: 0; color: #515154; font-size: .86rem; line-height: 1.5; }
+    .housing-guidance a { color: #0071e3; font-weight: 650; text-decoration: none; }
+    .housing-guidance a:hover { text-decoration: underline; }
+    .rate-note {
+      margin: .7rem 0 0;
+      color: #6e6e73;
+      font-size: .76rem;
+      line-height: 1.45;
+    }
+    .rate-note strong { color: #424245; }
+    .meal-requirement {
+      display: inline-flex;
+      margin-top: .7rem;
+      padding: .32rem .55rem;
+      border-radius: 999px;
+      color: #714d00;
+      background: rgba(183,121,0,.1);
+      font-size: .72rem;
+      font-weight: 700;
+    }
+    .meal-requirement.optional { color: #087a55; background: rgba(18,128,92,.1); }
     .budget-side.on-campus { background: rgba(232,244,255,.8) !important; }
     .calc-result {
       border-radius: 22px;
@@ -1293,6 +1325,7 @@
       .section-head h2 { font-size: clamp(2.2rem, 11vw, 3.2rem); }
       .overview-selection { align-items: stretch; flex-direction: column; }
       .overview-selection .btn { width: 100%; }
+      .housing-guidance { grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-transparency: reduce) {
       nav, .filters, .mobile-dock, .section, .hero-stat, .notice {
@@ -1376,8 +1409,15 @@
 
     <section class="section" id="calculator">
       <div class="section-head">
-        <div><p class="eyebrow" style="color:#1e407c">Personal budget</p><h2>Calculate your actual cost</h2><p>Enter the student’s share of rent—not the full apartment rent. The result includes the full lease term, which is usually 12 months.</p></div>
+        <div><p class="eyebrow" style="color:#1e407c">Personal budget</p><h2>Compare sophomore housing costs</h2><p>Choose an official Penn State returning-student housing rate, then compare it with the student’s full off-campus lease cost.</p></div>
       </div>
+      <aside class="housing-guidance">
+        <span class="notice-icon" aria-hidden="true">i</span>
+        <div>
+          <strong>Sophomores are not automatically relocated to Nittany Apartments.</strong>
+          <p>East Halls is reserved for first-year students. Returning students request housing through eLiving and select from the spaces still available in traditional or renovated halls, suites, single rooms, Nittany Apartments, or White Course Apartments. An invitation and specific housing option are not guaranteed. Rates below are official 2026–27 rates; Penn State has not published 2027–28 rates yet. <a href="https://liveon.psu.edu/university-park/current-students" target="_blank" rel="noopener">Returning-student process ↗</a> <a href="https://liveon.psu.edu/university-park/news/housing-and-food-rates-2026-27-academic-year" target="_blank" rel="noopener">Official rates ↗</a></p>
+        </div>
+      </aside>
       <div class="calculator panel">
         <div class="budget-columns">
           <section class="budget-side off-campus">
@@ -1394,23 +1434,69 @@
             <div class="side-total"><span>Apartment total</span><strong id="calcTotal">$13,960</strong></div>
           </section>
           <section class="budget-side on-campus">
-            <h3>Dorm + meal plan</h3>
-            <p>Change these figures for another room type, dining plan, or university.</p>
+            <h3>Penn State on-campus</h3>
+            <p>Select the housing offer and food choice the student expects to use.</p>
             <div class="calc-grid">
-              <label>Dorm room / semester ($)<input id="calcDorm" type="number" min="0" value="4254"></label>
-              <label>Meal plan / semester ($)<input id="calcMeal" type="number" min="0" value="3063"></label>
+              <label>Returning-student housing
+                <select id="campusHousing">
+                  <optgroup label="Traditional residence halls">
+                    <option value="4150">Double — $4,150/semester</option>
+                    <option value="3110">Small double — $3,110/semester</option>
+                    <option value="3738">Triple — $3,738/semester</option>
+                    <option value="4150">Triple with bath — $4,150/semester</option>
+                    <option value="3738">Quad — $3,738/semester</option>
+                    <option value="4150">Quad with bath — $4,150/semester</option>
+                    <option value="5390">Single — $5,390/semester</option>
+                    <option value="3320">Supplemental — $3,320/semester</option>
+                  </optgroup>
+                  <optgroup label="Renovated residence halls">
+                    <option value="4766">Double — $4,766/semester</option>
+                    <option value="6195">Single — $6,195/semester</option>
+                    <option value="4270">Triple — $4,270/semester</option>
+                    <option value="4270">Quad — $4,270/semester</option>
+                    <option value="3813">Supplemental — $3,813/semester</option>
+                  </optgroup>
+                  <optgroup label="Suites and Eastview Terrace">
+                    <option value="4910">Nittany Hall 2BR/4-person suite — $4,910/semester</option>
+                    <option value="5323">North 2BR/4-person suite — $5,323/semester</option>
+                    <option value="6456">North 2BR/2-person suite — $6,456/semester</option>
+                    <option value="6611">North 1BR/1-person suite — $6,611/semester</option>
+                    <option value="4258">North supplemental suite — $4,258/semester</option>
+                    <option value="6456">Eastview single with bath — $6,456/semester</option>
+                    <option value="6195">Eastview double with bath — $6,195/semester</option>
+                  </optgroup>
+                  <optgroup label="Apartments — meal plan optional">
+                    <option value="5039" data-meal-optional="true" selected>Nittany 2BR/4-person garden — $5,039/semester</option>
+                    <option value="5650" data-meal-optional="true">Nittany 4BR/4-person garden — $5,650/semester</option>
+                    <option value="5872" data-meal-optional="true">Nittany 4BR/4-person townhouse — $5,872/semester</option>
+                    <option value="5909" data-meal-optional="true">White Course 4BR/4-person — $5,909/semester</option>
+                  </optgroup>
+                </select>
+              </label>
+              <label>Food choice
+                <select id="campusFood">
+                  <option value="2737">Campus Meal Plan 1 — $2,737/semester</option>
+                  <option value="2988">Campus Meal Plan 2 — $2,988/semester</option>
+                  <option value="3218">Campus Meal Plan 3 — $3,218/semester</option>
+                  <option value="1260" data-apartment-only="true" selected>Cook in apartment — ~$280/month for 9 months</option>
+                </select>
+              </label>
+              <label>Housing / semester ($)<input id="calcDorm" type="number" min="0" value="5039"></label>
+              <label>Food / semester equivalent ($)<input id="calcMeal" type="number" min="0" value="1260"></label>
             </div>
+            <span class="meal-requirement optional" id="mealRequirement">Meal plan optional for this apartment</span>
+            <p class="rate-note"><strong>Food note:</strong> Campus meal-plan amounts are official. The self-catered option uses the app’s planning estimate of $280 per month across the roughly nine-month academic year and is not a Penn State published grocery rate.</p>
             <table class="breakdown">
-              <tr><td>Dorm, two semesters</td><td id="calcDormAnnual">$8,508</td></tr>
-              <tr><td>Meal plan, two semesters</td><td id="calcMealAnnual">$6,126</td></tr>
+              <tr><td>Housing, two semesters</td><td id="calcDormAnnual">$10,078</td></tr>
+              <tr><td>Food, academic year</td><td id="calcMealAnnual">$2,520</td></tr>
             </table>
-            <div class="side-total"><span>On-campus total</span><strong id="dormBenchmarkTotal">$14,634</strong></div>
+            <div class="side-total"><span>On-campus total</span><strong id="dormBenchmarkTotal">$12,598</strong></div>
           </section>
         </div>
         <div class="calc-result">
           <div>
             <span style="color:#cfe1f4;font-weight:700">YOUR COST COMPARISON</span>
-            <div class="delta save" id="calcDelta" role="status" aria-live="polite">$674 below the dorm benchmark</div>
+            <div class="delta cost" id="calcDelta" role="status" aria-live="polite">$1,362 above the on-campus selection</div>
           </div>
           <table class="breakdown">
             <tr><td>Rent</td><td id="rentTotal">$9,600</td></tr>
@@ -1427,8 +1513,8 @@
         <div><p class="eyebrow" style="color:#1e407c">Year-2 decision</p><h2>Dorm or private apartment?</h2></div>
       </div>
       <div class="cost-strip">
-        <div class="cost-box"><span>Dorm, two semesters</span><strong id="annualDormCost">$8,508</strong></div>
-        <div class="cost-box"><span>Meal plan, two semesters</span><strong id="annualMealCost">$6,126</strong></div>
+        <div class="cost-box"><span>Selected on-campus housing</span><strong id="annualDormCost">$10,078</strong></div>
+        <div class="cost-box"><span>Selected on-campus food</span><strong id="annualMealCost">$2,520</strong></div>
         <div class="cost-box"><span>Apartment groceries</span><strong>~$3,360/year</strong></div>
         <div class="cost-box"><span>Unfurnished setup</span><strong>~$515–1,200</strong></div>
       </div>
@@ -1578,7 +1664,26 @@
       area.value = ""; document.querySelector("#maxPrice").value = ""; document.querySelector("#furnished").value = ""; render();
     });
 
+    const campusHousing = document.querySelector("#campusHousing");
+    const campusFood = document.querySelector("#campusFood");
+    const calcDormInput = document.querySelector("#calcDorm");
+    const calcMealInput = document.querySelector("#calcMeal");
+    const mealRequirement = document.querySelector("#mealRequirement");
     const calcIds = ["calcRent","calcMonths","calcGroceries","calcUtilities","calcFurniture","calcFees","calcDorm","calcMeal"];
+    function syncCampusRates() {
+      const housingOption = campusHousing.selectedOptions[0];
+      const mealOptional = housingOption.dataset.mealOptional === "true";
+      const apartmentFood = campusFood.querySelector("[data-apartment-only]");
+      apartmentFood.disabled = !mealOptional;
+      if (!mealOptional && apartmentFood.selected) campusFood.value = "2988";
+      calcDormInput.value = campusHousing.value;
+      calcMealInput.value = campusFood.value;
+      mealRequirement.classList.toggle("optional", mealOptional);
+      mealRequirement.textContent = mealOptional
+        ? "Meal plan optional for this apartment"
+        : "Campus Meal Plan required for this housing";
+      calculate();
+    }
     function calculate() {
       const [rent, months, groceries, utilities, furniture, fees, dormPerSemester, mealPerSemester] = calcIds.map(id => Math.max(0, Number(document.querySelector(`#${id}`).value) || 0));
       const rentTotal = rent * months, groceryTotal = groceries * months, utilityTotal = utilities * months, setupTotal = furniture + fees;
@@ -1597,9 +1702,11 @@
       document.querySelector("#calcMealAnnual").textContent = fmt(annualMeal);
       const delta = document.querySelector("#calcDelta");
       delta.className = `delta ${total <= dorm ? "save" : "cost"}`;
-      delta.textContent = `${fmt(difference)} ${total <= dorm ? "below" : "above"} the dorm benchmark`;
+      delta.textContent = `${fmt(difference)} ${total <= dorm ? "below" : "above"} the on-campus selection`;
     }
     calcIds.forEach(id => document.querySelector(`#${id}`).addEventListener("input", calculate));
+    campusHousing.addEventListener("change", syncCampusRates);
+    campusFood.addEventListener("change", syncCampusRates);
     render(); calculate();
   </script>
 </body>
