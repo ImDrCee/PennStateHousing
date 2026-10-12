@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive comparison of 50 private apartments near Penn State University Park with rent, commute, grocery, furniture, and dorm cost estimates.">
-  <title>Compare Dorm Vs. off-campus | Penn State Housing</title>
+  <meta name="description" content="Interactive comparison of Penn State on-campus housing and 50 private off-campus properties with lodging, food, commute, and full-year cost estimates.">
+  <title>Compare On-Campus vs. Off-Campus | Penn State Housing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
@@ -1249,6 +1249,38 @@
     #allMap { height: min(68vh, 610px); }
     .overview-selection { min-height: 74px; background: rgba(255,255,255,.92); }
     .property-pin { background: #0071e3; font-family: inherit; }
+    .property-pin.on-campus {
+      color: #fff;
+      background: #12805c;
+      box-shadow: 0 4px 14px rgba(18,128,92,.38);
+      font-size: 9px;
+    }
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem 1rem;
+      padding: .7rem 1.1rem;
+      border-top: 1px solid var(--line);
+      color: #515154;
+      background: rgba(255,255,255,.92);
+      font-size: .75rem;
+      font-weight: 650;
+    }
+    .map-legend span { display: inline-flex; align-items: center; gap: .42rem; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; background: #0071e3; }
+    .legend-dot.campus { background: #12805c; }
+    .housing-type {
+      display: inline-flex;
+      width: fit-content;
+      margin: .55rem .45rem 0;
+      padding: .3rem .5rem;
+      border-radius: 999px;
+      color: #075f46;
+      background: rgba(18,128,92,.1);
+      font-size: .66rem;
+      font-weight: 750;
+    }
+    .housing-type.off-campus { color: #005eb8; background: rgba(0,113,227,.09); }
     .budget-side, .cost-box, .compare {
       border-color: rgba(60,60,67,.12);
       border-radius: 22px;
@@ -1351,17 +1383,17 @@
     <div class="announcement">Plan early for 2027–28 · Compare location, rent and the full-year cost</div>
     <nav aria-label="Primary navigation">
       <div class="brand"><span class="brand-mark">PSU</span><span>Housing Dashboard</span></div>
-      <div><a href="#map-overview">Map</a><a href="#apartments">Apartments</a><a href="#calculator">Cost calculator</a><a href="#comparison">Compare</a></div>
+      <div><a href="#map-overview">Map</a><a href="#apartments">Housing</a><a href="#calculator">Cost calculator</a><a href="#comparison">Compare</a></div>
     </nav>
     <div class="hero-grid">
       <div>
         <p class="eyebrow">University Park · 2027–28 planning dashboard</p>
-        <h1>Compare Dorm Vs. off-campus</h1>
-        <p class="hero-copy">Explore State College apartments by price, neighborhood and commute, then compare the full-year cost with campus housing.</p>
-        <div class="hero-actions"><a class="hero-cta" href="#apartments">Browse 50 properties <span aria-hidden="true">&nbsp;→</span></a></div>
+        <h1>Compare on-campus vs. off-campus</h1>
+        <p class="hero-copy">Explore Penn State housing areas and private State College properties by price, location and commute, then compare the full-year cost.</p>
+        <div class="hero-actions"><a class="hero-cta" href="#apartments">Browse housing options <span aria-hidden="true">&nbsp;→</span></a></div>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><strong>50</strong><span>properties researched</span></div>
+        <div class="hero-stat"><strong>58</strong><span>on-campus and off-campus options</span></div>
         <div class="hero-stat"><strong id="heroDormBenchmark">$14,634</strong><span>editable dorm benchmark</span></div>
         <div class="hero-stat"><strong>~$280</strong><span>monthly groceries</span></div>
         <div class="hero-stat"><strong>$850–900</strong><span>monthly break-even rent</span></div>
@@ -1372,36 +1404,38 @@
   <main id="main-content">
     <aside class="notice panel">
       <span class="notice-icon">!</span>
-      <p><strong>Planning estimates, not lease offers.</strong> Most landlords have not published binding 2027–28 rates. Prices shown are the latest advertised figures found in October 2026. Allow 3%–6% where a Fall 2027 rate is not confirmed, and verify rent, fees, utilities, lease dates and availability directly with the property.</p>
+      <p><strong>Planning estimates, not housing offers.</strong> Campus tiles use official 2026–27 Penn State rates because 2027–28 rates are not published yet; a returning-student assignment is not guaranteed. Most landlords have not published binding 2027–28 rates. Verify availability, rent, fees, utilities, lease dates and housing terms directly with Penn State or the property.</p>
     </aside>
 
     <section class="section" id="map-overview">
       <div class="section-head">
-        <div><p class="eyebrow" style="color:#1e407c">Location overview</p><h2>Explore all 50 properties on one map</h2><p>Zoom into a neighborhood or select a numbered pin. Nearby pins cluster automatically; click a cluster to expand it. Every property popup links directly to Google Maps and the leasing website.</p></div>
+        <div><p class="eyebrow" style="color:#1e407c">Location overview</p><h2>Explore Penn State housing options on one map</h2><p>Green C-pins identify sophomore-eligible on-campus housing areas. Blue numbered pins identify private off-campus properties. Campus availability is determined through Penn State’s returning-student housing process.</p></div>
       </div>
       <div class="overview-map-panel panel">
-        <div id="allMap" role="application" aria-label="Interactive map of 50 private properties near Penn State University Park"></div>
+        <div id="allMap" role="application" aria-label="Interactive map of Penn State on-campus and private off-campus housing options"></div>
+        <div class="map-legend" aria-label="Map pin legend"><span><i class="legend-dot campus"></i>On-campus housing area</span><span><i class="legend-dot"></i>Off-campus property</span></div>
         <div class="overview-selection">
-          <div><strong id="overviewTitle">50 properties near Penn State University Park</strong><span id="overviewDetail">Select any numbered pin to see property details.</span></div>
-          <button class="btn" id="resetMap" type="button">Show all properties</button>
+          <div><strong id="overviewTitle">58 housing options near Penn State University Park</strong><span id="overviewDetail">Select a green campus pin or blue property pin for details.</span></div>
+          <button class="btn" id="resetMap" type="button">Show all housing</button>
         </div>
       </div>
     </section>
 
     <section class="section" id="apartments">
       <div class="section-head">
-        <div><p class="eyebrow" style="color:#1e407c">Apartment explorer</p><h2>Search all 50 options</h2><p>“From” prices are approximate monthly per-student costs used only for filtering. Read each listing to see whether the advertised rent is per bed or for the whole unit.</p></div>
+        <div><p class="eyebrow" style="color:#1e407c">Housing explorer</p><h2>Compare on-campus and off-campus options</h2><p>Campus tiles use official 2026–27 per-person rates. Private-property “from” prices are approximate monthly per-student costs used for filtering; verify whether each advertised rent is per bed or for the whole unit.</p></div>
       </div>
       <div class="explorer-layout">
         <div class="filters panel">
-          <label>Search name or address<input id="search" type="search" placeholder="Beaver, Atherton, 2BR…"></label>
+          <label>Search name or address<input id="search" type="search" placeholder="Nittany, Beaver, Atherton…"></label>
+          <label>Housing type<select id="housingType"><option value="">On-campus + off-campus</option><option value="campus">On-campus</option><option value="off">Off-campus</option></select></label>
           <label>Area<select id="area"><option value="">All areas</option></select></label>
-          <label>Maximum price / student<select id="maxPrice"><option value="">Any price</option><option value="750">$750</option><option value="900">$900</option><option value="1100">$1,100</option><option value="1400">$1,400</option></select></label>
+          <label>Maximum monthly housing cost<select id="maxPrice"><option value="">Any price</option><option value="750">$750</option><option value="900">$900</option><option value="1100">$1,100</option><option value="1400">$1,400</option></select></label>
           <label>Furnishing<select id="furnished"><option value="">Any</option><option value="yes">Furnished</option><option value="no">Unfurnished</option><option value="mixed">Options / unclear</option></select></label>
           <button class="btn" id="reset" type="button">Clear filters</button>
         </div>
         <div class="listing-content">
-          <div class="results-bar"><span id="resultCount" role="status" aria-live="polite">50 properties</span><span>Choose “View on map” to locate a property below</span></div>
+          <div class="results-bar"><span id="resultCount" role="status" aria-live="polite">58 housing options</span><span>Choose “View on map” to locate an option</span></div>
           <div class="cards" id="cards"></div>
         </div>
       </div>
@@ -1591,11 +1625,26 @@
       {n:"The Yards at Old State",a:"1830 Blue Course Dr, State College, PA",z:"West / Blue Course",c:"CATA; likely over 10 min door-to-door",r:"2BR approximately $1,600; 3BR $1,099–1,105 per bed",p:1099,f:"yes",u:"Furnished",s:"https://www.theyardsatoldstate.com/"}
     ];
     const coordinates = [[40.7908774,-77.8642012],[40.7902863,-77.8624181],[40.7856944,-77.8574596],[40.7886587,-77.8604042],[40.7848255,-77.8438477],[40.8106051,-77.8926551],[40.8176134,-77.8884819],[40.8173860,-77.8894400],[40.8109080,-77.8904766],[40.8233252,-77.8916517],[40.7976254,-77.8539789],[40.7919421,-77.8621556],[40.7959538,-77.8573063],[40.7961231,-77.8562702],[40.7963771,-77.8566745],[40.7986733,-77.8537068],[40.7971084,-77.8557109],[40.8002425,-77.8515558],[40.7998509,-77.8520459],[40.7985477,-77.8541192],[40.8010251,-77.8520124],[40.7866826,-77.8712855],[40.7884404,-77.8691528],[40.7915925,-77.8659430],[40.7877278,-77.8505971],[40.7988031,-77.8552829],[40.7939195,-77.8588858],[40.7952682,-77.8575324],[40.7975870,-77.8557278],[40.7916285,-77.8606844],[40.7913431,-77.8651939],[40.7969437,-77.8567535],[40.7999528,-77.8537398],[40.7993043,-77.8536709],[40.7800838,-77.8546592],[40.8038581,-77.8974806],[40.7989429,-77.8484831],[40.8012193,-77.8459647],[40.7983798,-77.8882139],[40.7842643,-77.8525029],[40.7944972,-77.8613646],[40.7913867,-77.8528337],[40.7779928,-77.8525138],[40.7895581,-77.8585604],[40.7942652,-77.8554506],[40.8236921,-77.8845570],[40.7798003,-77.8505495],[40.7879390,-77.8970518],[40.8067401,-77.8331614],[40.7684881,-77.8604157]];
-    properties.forEach((property, index) => [property.lat, property.lng] = coordinates[index]);
+    properties.forEach((property, index) => {
+      [property.lat, property.lng] = coordinates[index];
+      property.t = "off";
+    });
+    properties.push(
+      {n:"North Halls",a:"Warnock Commons, University Park, PA 16802",z:"On campus · North",c:"On campus",r:"Suites: $4,258–$6,611 per semester; meal plan required",p:946,f:"yes",u:"Utilities included; returning-student availability varies",s:"https://liveon.psu.edu/university-park/housing/north-halls",lat:40.80282,lng:-77.86613,t:"campus"},
+      {n:"South Halls",a:"Redifer Commons, University Park, PA 16801",z:"On campus · South",c:"On campus",r:"Traditional/renovated rooms: $3,110–$6,195 per semester; meal plan required",p:691,f:"yes",u:"Utilities included; room types depend on availability",s:"https://liveon.psu.edu/university-park/housing/south-halls",lat:40.79182,lng:-77.86021,t:"campus"},
+      {n:"West Halls",a:"Waring Commons, University Park, PA 16802",z:"On campus · West",c:"On campus",r:"Traditional rooms: $3,110–$5,390 per semester; meal plan required",p:691,f:"yes",u:"Utilities included; first-year and upper-class students",s:"https://liveon.psu.edu/university-park/housing/west-halls",lat:40.80245,lng:-77.86839,t:"campus"},
+      {n:"Pollock Halls",a:"Pollock Commons, University Park, PA 16802",z:"On campus · Pollock",c:"On campus",r:"Traditional rooms: $3,110–$5,390 per semester; meal plan required",p:691,f:"yes",u:"Utilities included; returning-student availability varies",s:"https://liveon.psu.edu/university-park/housing/pollock-halls",lat:40.79839,lng:-77.86022,t:"campus"},
+      {n:"Nittany Hall",a:"Nittany Hall, University Park, PA 16802",z:"On campus · Nittany",c:"On campus",r:"2BR/4-person suite: $4,910 per semester; meal plan required",p:1091,f:"yes",u:"Furnished suite with bath; utilities included",s:"https://liveon.psu.edu/university-park/housing/nittany-hall",lat:40.80286,lng:-77.85888,t:"campus"},
+      {n:"Nittany Apartments",a:"600 Pollock Rd, University Park, PA 16802",z:"On campus · Nittany",c:"On campus",r:"Garden/townhouse: $5,039–$5,872 per semester; meal plan optional",p:1120,f:"yes",u:"Furnished; full kitchen and utilities included",s:"https://liveon.psu.edu/university-park/housing/nittany-apartments-suites",lat:40.80361,lng:-77.85778,t:"campus"},
+      {n:"Eastview Terrace",a:"Eastview Terrace, University Park, PA 16802",z:"On campus · Eastview",c:"On campus",r:"Single/double with bath: $6,195–$6,456 per semester; meal plan required",p:1377,f:"yes",u:"Private bath; utilities included",s:"https://liveon.psu.edu/university-park/housing/eastview-terrace",lat:40.80167,lng:-77.85417,t:"campus"},
+      {n:"White Course Apartments",a:"104 Weston, University Park, PA 16802",z:"On campus · White Course",c:"On campus",r:"4BR/4-person apartment: $5,909 per semester; meal plan optional",p:1313,f:"yes",u:"Furnished; full kitchen and utilities included",s:"https://liveon.psu.edu/university-park/housing/white-course-undergraduate-apartments",lat:40.78931,lng:-77.87300,t:"campus"}
+    );
 
     const cards = document.querySelector("#cards");
     const area = document.querySelector("#area");
+    const housingType = document.querySelector("#housingType");
     const fmt = value => new Intl.NumberFormat("en-US", {style:"currency", currency:"USD", maximumFractionDigits:0}).format(value);
+    const optionLabel = (p, index) => p.t === "campus" ? `C${index - 49}` : String(index + 1);
     [...new Set(properties.map(p => p.z))].sort().forEach(z => area.add(new Option(z, z)));
 
     function googleUrl(address) {
@@ -1609,12 +1658,13 @@
     const markerLayer = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 35});
     const overviewMarkers = [];
     properties.forEach((p, index) => {
-      const icon = L.divIcon({className: "property-pin", html: String(index + 1), iconSize: [30, 30]});
+      const label = optionLabel(p, index);
+      const icon = L.divIcon({className: `property-pin ${p.t === "campus" ? "on-campus" : ""}`, html: label, iconSize: [30, 30]});
       const marker = L.marker([p.lat, p.lng], {icon, title: p.n});
-      marker.bindPopup(`<strong>#${index + 1} ${p.n}</strong><p>${p.a}<br>${p.c}<br>${p.r}</p><a href="${googleUrl(p.a)}" target="_blank" rel="noopener">Google Maps ↗</a><a href="${p.s}" target="_blank" rel="noopener">Property site ↗</a>`);
+      marker.bindPopup(`<strong>${label} ${p.n}</strong><p>${p.t === "campus" ? "On-campus housing area" : "Off-campus property"}<br>${p.a}<br>${p.r}</p><a href="${googleUrl(p.t === "campus" ? `${p.lat},${p.lng}` : p.a)}" target="_blank" rel="noopener">Google Maps ↗</a><a href="${p.s}" target="_blank" rel="noopener">${p.t === "campus" ? "Housing details" : "Property site"} ↗</a>`);
       marker.on("click", () => {
-        document.querySelector("#overviewTitle").textContent = `#${index + 1} ${p.n}`;
-        document.querySelector("#overviewDetail").textContent = `${p.c} · ${p.a}`;
+        document.querySelector("#overviewTitle").textContent = `${label} ${p.n}`;
+        document.querySelector("#overviewDetail").textContent = `${p.t === "campus" ? "On campus" : p.c} · ${p.a}`;
       });
       overviewMarkers.push(marker);
       markerLayer.addLayer(marker);
@@ -1625,17 +1675,18 @@
     document.querySelector("#resetMap").addEventListener("click", () => {
       overviewMap.closePopup();
       overviewMap.fitBounds(overviewBounds, {padding: [28, 28]});
-      document.querySelector("#overviewTitle").textContent = "50 properties near Penn State University Park";
-      document.querySelector("#overviewDetail").textContent = "Select any numbered pin to see property details.";
+      document.querySelector("#overviewTitle").textContent = "58 housing options near Penn State University Park";
+      document.querySelector("#overviewDetail").textContent = "Select a green campus pin or blue property pin for details.";
     });
     function selectProperty(index) {
       const p = properties[index];
+      const label = optionLabel(p, index);
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       document.querySelectorAll(".card").forEach(el => el.classList.toggle("active", Number(el.dataset.index) === index));
       overviewMap.setView([p.lat, p.lng], 18, {animate: !reduceMotion});
       window.setTimeout(() => overviewMarkers[index].openPopup(), 100);
-      document.querySelector("#overviewTitle").textContent = `#${index + 1} ${p.n}`;
-      document.querySelector("#overviewDetail").textContent = `${p.c} · ${p.a}`;
+      document.querySelector("#overviewTitle").textContent = `${label} ${p.n}`;
+      document.querySelector("#overviewDetail").textContent = `${p.t === "campus" ? "On campus" : p.c} · ${p.a}`;
       document.querySelector("#map-overview").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block:"start"});
     }
     function render() {
@@ -1645,23 +1696,25 @@
       const furnishing = document.querySelector("#furnished").value;
       const filtered = properties.map((p, i) => ({...p, i})).filter(p =>
         (!q || `${p.n} ${p.a} ${p.r} ${p.c}`.toLowerCase().includes(q)) &&
+        (!housingType.value || p.t === housingType.value) &&
         (!z || p.z === z) && (p.p === null || p.p <= max) && (!furnishing || p.f === furnishing)
       );
-      document.querySelector("#resultCount").textContent = `${filtered.length} ${filtered.length === 1 ? "property" : "properties"}`;
+      document.querySelector("#resultCount").textContent = `${filtered.length} ${filtered.length === 1 ? "housing option" : "housing options"}`;
       cards.innerHTML = filtered.length ? filtered.map(p => `
         <article class="card" data-index="${p.i}">
-          <div class="card-visual visual-${p.i % 6}"><span class="visual-number">#${p.i + 1}</span><span class="visual-area">${p.z}</span></div>
-          <div class="card-top"><div><span class="number">#${p.i + 1}</span><h3>${p.n}</h3></div><span class="price">${p.p === null ? "Call for price" : `From ~${fmt(p.p)}/student`}</span></div>
+          <div class="card-visual visual-${p.i % 6}"><span class="visual-number">${optionLabel(p, p.i)}</span><span class="visual-area">${p.z}</span></div>
+          <span class="housing-type ${p.t === "off" ? "off-campus" : ""}">${p.t === "campus" ? "On campus" : "Off campus"}</span>
+          <div class="card-top"><div><span class="number">${optionLabel(p, p.i)}</span><h3>${p.n}</h3></div><span class="price">${p.t === "campus" ? "Official 2026–27 rate" : p.p === null ? "Call for price" : `From ~${fmt(p.p)}/student`}</span></div>
           <p class="address">${p.a}</p><p class="rent-detail">${p.r}</p>
           <div class="tags"><span class="tag green">${p.c}</span><span class="tag">${p.f === "yes" ? "Furnished" : p.f === "no" ? "Unfurnished" : "Options / verify"}</span><span class="tag amber">${p.u}</span></div>
-          <div class="card-actions"><button class="text-btn" type="button" data-map="${p.i}">View on map</button><a class="text-btn" href="${googleUrl(p.a)}" target="_blank" rel="noopener">Google Maps ↗</a><a class="text-btn" href="${p.s}" target="_blank" rel="noopener">Property site ↗</a></div>
-        </article>`).join("") : `<div class="empty panel">No properties match these filters. Try increasing the price or clearing a filter.</div>`;
+          <div class="card-actions"><button class="text-btn" type="button" data-map="${p.i}">View on map</button><a class="text-btn" href="${googleUrl(p.t === "campus" ? `${p.lat},${p.lng}` : p.a)}" target="_blank" rel="noopener">Google Maps ↗</a><a class="text-btn" href="${p.s}" target="_blank" rel="noopener">${p.t === "campus" ? "Housing details" : "Property site"} ↗</a></div>
+        </article>`).join("") : `<div class="empty panel">No housing options match these filters. Try increasing the price or clearing a filter.</div>`;
       cards.querySelectorAll("[data-map]").forEach(btn => btn.addEventListener("click", () => selectProperty(Number(btn.dataset.map))));
     }
-    ["search","area","maxPrice","furnished"].forEach(id => document.querySelector(`#${id}`).addEventListener(id === "search" ? "input" : "change", render));
+    ["search","housingType","area","maxPrice","furnished"].forEach(id => document.querySelector(`#${id}`).addEventListener(id === "search" ? "input" : "change", render));
     document.querySelector("#reset").addEventListener("click", () => {
       document.querySelector("#search").value = "";
-      area.value = ""; document.querySelector("#maxPrice").value = ""; document.querySelector("#furnished").value = ""; render();
+      housingType.value = ""; area.value = ""; document.querySelector("#maxPrice").value = ""; document.querySelector("#furnished").value = ""; render();
     });
 
     const campusHousing = document.querySelector("#campusHousing");

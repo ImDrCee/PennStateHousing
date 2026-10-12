@@ -1,11 +1,12 @@
-# Penn State Housing: Dorm vs. Off-Campus
+# Penn State Housing: On-Campus vs. Off-Campus
 
-An interactive, static web application comparing 50 private apartment options near Penn State University Park with the cost of a traditional dorm and dining plan.
+An interactive, static web application comparing Penn State on-campus housing areas and 50 private off-campus properties with lodging, food, commute, and full-year cost estimates.
 
 ## Features
 
-- Search and filter 50 State College housing options
-- Clustered interactive OpenStreetMap with all 50 numbered property pins
+- Search and filter 58 housing options: 8 Penn State on-campus housing areas and 50 private off-campus properties
+- Clustered interactive OpenStreetMap with color-coded campus and private-property pins
+- On-campus tiles with official 2026–27 lodging rates, meal-plan requirements, and Penn State housing links
 - Google Maps and leasing-site links in every map popup
 - Latest advertised rent with per-bed versus per-unit labeling
 - Google Maps preview and direct map links
