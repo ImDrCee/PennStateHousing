@@ -13,8 +13,9 @@ An interactive, static web application comparing 50 private apartment options ne
 - Editable per-semester dorm and meal-plan benchmark
 - Grocery and one-time furniture estimates
 - Year-2 dorm versus apartment advantages and trade-offs
+- Apple-inspired interface with system typography, restrained translucent materials, and immediate press feedback
 - Property-listing dashboard with a persistent filter sidebar and visual neighborhood cards
-- Responsive layout, keyboard focus states and reduced-motion support
+- Responsive layout, keyboard focus states, reduced-motion support, reduced-transparency support, and increased-contrast support
 
 ## Open the application
 

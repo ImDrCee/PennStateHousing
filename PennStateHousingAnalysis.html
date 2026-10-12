@@ -996,13 +996,327 @@
       .card { min-height: 330px; }
       .card-visual { min-height: 145px; }
     }
+
+    /* Apple-inspired interaction and visual system. */
+    :root {
+      color-scheme: light;
+      --navy: #1d1d1f;
+      --blue: #0071e3;
+      --sky: #d6ecff;
+      --cream: #f5f5f7;
+      --paper: rgba(255, 255, 255, .88);
+      --ink: #1d1d1f;
+      --muted: #6e6e73;
+      --line: rgba(60, 60, 67, .16);
+      --green: #12805c;
+      --amber: #9a6700;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .08);
+      --spring: 420ms linear(
+        0, .009, .035 2.1%, .141 4.4%, .723 12.9%, .938 16.7%,
+        1.017 20.4%, 1.042 24.4%, 1.017 34.6%, 1.003 44.3%, 1
+      );
+    }
+    html { background: #f5f5f7; }
+    body {
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 84% 7%, rgba(0, 113, 227, .08), transparent 28rem),
+        #f5f5f7;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      font-optical-sizing: auto;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, .brand, .filters::before {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    }
+    button, a, input, select { -webkit-tap-highlight-color: transparent; }
+    button, .hero-cta, .text-btn, nav a, .mobile-dock a {
+      touch-action: manipulation;
+    }
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 1300;
+      width: 100%;
+      min-height: 52px;
+      padding: 0 max(1rem, calc((100vw - 1280px) / 2));
+      border-bottom: 1px solid rgba(60, 60, 67, .12);
+      background: rgba(250, 250, 252, .72);
+      box-shadow: none;
+      backdrop-filter: saturate(180%) blur(22px);
+      -webkit-backdrop-filter: saturate(180%) blur(22px);
+    }
+    .brand { gap: .62rem; font-size: .8rem; letter-spacing: -.01em; }
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 9px;
+      color: white;
+      background: linear-gradient(145deg, #1887f2, #0060c7);
+      box-shadow: inset 0 1px rgba(255,255,255,.3);
+      font-size: .6rem;
+      letter-spacing: -.02em;
+    }
+    nav a {
+      min-height: 36px;
+      padding: .58rem .7rem;
+      border-radius: 10px;
+      color: #424245;
+      font-size: .76rem;
+      font-weight: 600;
+      transition: color 160ms ease, background 160ms ease, transform 100ms ease;
+    }
+    nav a:hover { color: #0071e3; background: rgba(0, 113, 227, .07); }
+    nav a:active { transform: scale(.96); }
+    .hero {
+      min-height: 620px;
+      padding-top: 9rem;
+      padding-bottom: 5.5rem;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 78% 52%, rgba(0, 113, 227, .18), transparent 21rem),
+        radial-gradient(circle at 66% 72%, rgba(90, 200, 250, .2), transparent 18rem),
+        linear-gradient(145deg, #fbfbfd 10%, #f1f6fc 58%, #e9f4ff);
+    }
+    .hero::after {
+      position: absolute;
+      inset: auto 8% -8rem auto;
+      width: min(40vw, 34rem);
+      aspect-ratio: 1;
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 50%;
+      background: rgba(255,255,255,.18);
+      box-shadow:
+        inset 0 0 0 1.5rem rgba(255,255,255,.12),
+        0 35px 90px rgba(0,113,227,.12);
+      backdrop-filter: blur(4px);
+      content: "";
+      pointer-events: none;
+    }
+    .hero-grid { position: relative; z-index: 1; gap: clamp(2.5rem, 6vw, 6rem); }
+    .hero .eyebrow, .section-head .eyebrow {
+      color: #0071e3 !important;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    h1 {
+      max-width: 760px;
+      color: #1d1d1f;
+      font-size: clamp(3.1rem, 6vw, 6.4rem);
+      line-height: .94;
+      letter-spacing: -.065em;
+    }
+    .hero-copy {
+      max-width: 600px;
+      color: #6e6e73;
+      font-size: clamp(1.05rem, 1.5vw, 1.24rem);
+      line-height: 1.55;
+      letter-spacing: -.018em;
+    }
+    .hero-cta, .btn {
+      min-height: 44px;
+      border-radius: 999px;
+      color: white;
+      background: #0071e3;
+      box-shadow: none;
+      font-weight: 650;
+      transition: transform 100ms ease, background 160ms ease, box-shadow var(--spring);
+    }
+    .hero-cta:hover, .btn:hover {
+      background: #0077ed;
+      box-shadow: 0 10px 26px rgba(0, 113, 227, .18);
+      transform: translateY(-1px);
+    }
+    .hero-cta:active, .btn:active { transform: scale(.97); }
+    .hero-stats { gap: .65rem; }
+    .hero-stat {
+      min-height: 138px;
+      border: 1px solid rgba(255,255,255,.88);
+      border-radius: 24px;
+      color: #1d1d1f;
+      background: rgba(255,255,255,.62) !important;
+      box-shadow: 0 16px 44px rgba(0,0,0,.06);
+      backdrop-filter: saturate(170%) blur(20px);
+      -webkit-backdrop-filter: saturate(170%) blur(20px);
+    }
+    .hero-stat strong {
+      color: #1d1d1f;
+      font-size: clamp(1.55rem, 3vw, 2.25rem);
+      letter-spacing: -.045em;
+    }
+    .hero-stat span { max-width: 13ch; color: #6e6e73; line-height: 1.25; text-align: center; }
+    main { width: min(1320px, calc(100% - 2rem)); margin: -2rem auto 5rem; }
+    .notice {
+      border: 1px solid rgba(154, 103, 0, .12);
+      background: rgba(255, 249, 230, .86);
+      box-shadow: 0 12px 32px rgba(0,0,0,.04);
+      backdrop-filter: blur(18px);
+    }
+    .notice-icon { background: #b77900; }
+    .section {
+      margin-top: 1.25rem;
+      padding: clamp(2.6rem, 5vw, 5rem) clamp(1rem, 3.5vw, 3rem);
+      border: 1px solid rgba(255,255,255,.92);
+      border-radius: 30px;
+      background: rgba(255,255,255,.76) !important;
+      box-shadow: 0 20px 65px rgba(0,0,0,.055);
+      backdrop-filter: saturate(150%) blur(16px);
+      -webkit-backdrop-filter: saturate(150%) blur(16px);
+    }
+    #apartments { padding-inline: clamp(1rem, 3.5vw, 3rem); }
+    .section-head h2 {
+      color: #1d1d1f;
+      font-size: clamp(2.25rem, 4.4vw, 4.2rem);
+      line-height: 1.02;
+      letter-spacing: -.055em;
+    }
+    .section-head p { color: #6e6e73; font-size: .98rem; line-height: 1.55; }
+    .panel, .overview-map-panel, .calculator {
+      border-color: var(--line);
+      box-shadow: 0 16px 48px rgba(0,0,0,.06);
+    }
+    .filters {
+      top: 68px;
+      padding: 1.15rem;
+      border-color: rgba(60,60,67,.12);
+      border-radius: 20px;
+      background: rgba(250,250,252,.82);
+      box-shadow: 0 14px 40px rgba(0,0,0,.07);
+      backdrop-filter: saturate(180%) blur(22px);
+      -webkit-backdrop-filter: saturate(180%) blur(22px);
+    }
+    .filters::before { color: #1d1d1f; letter-spacing: -.02em; }
+    .filters .btn { background: #1d1d1f; }
+    label { color: #515154; font-size: .73rem; letter-spacing: 0; }
+    input, select {
+      min-height: 44px;
+      border-color: rgba(60,60,67,.2);
+      border-radius: 12px;
+      color: #1d1d1f;
+      background: rgba(255,255,255,.9);
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+    input:hover, select:hover { border-color: rgba(60,60,67,.36); }
+    input:focus, select:focus {
+      border-color: #0071e3;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(0,113,227,.14);
+    }
+    .results-bar { border-radius: 14px; background: rgba(118,118,128,.08); }
+    .cards { gap: 1rem; }
+    .card {
+      border-color: rgba(60,60,67,.12);
+      border-radius: 22px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 8px 26px rgba(0,0,0,.045);
+      transition: transform var(--spring), box-shadow var(--spring), border-color 180ms ease;
+    }
+    .card:hover, .card.active {
+      border-color: rgba(0,113,227,.3);
+      box-shadow: 0 22px 50px rgba(0,0,0,.1);
+      transform: translateY(-5px) scale(1.005);
+    }
+    .card-visual {
+      min-height: 142px;
+      border-radius: 17px;
+      background:
+        radial-gradient(circle at 72% 26%, rgba(255,255,255,.9), transparent 25%),
+        linear-gradient(145deg, #d9efff, #edf8f4);
+    }
+    .card-visual::after { border-color: rgba(255,255,255,.42); }
+    .visual-number, .visual-area {
+      color: #1d1d1f;
+      background: rgba(255,255,255,.68);
+      backdrop-filter: blur(12px);
+    }
+    .card h3 { color: #1d1d1f; letter-spacing: -.025em; }
+    .address, .rent-detail { color: #6e6e73; }
+    .price { color: #087a55; }
+    .tag { color: #424245; background: rgba(118,118,128,.1); }
+    .tag.green { color: #087a55; background: rgba(18,128,92,.1); }
+    .tag.amber { color: #8a5a00; background: rgba(183,121,0,.1); }
+    .text-btn {
+      min-height: 34px;
+      padding: .45rem .6rem;
+      color: #0071e3;
+      transition: color 160ms ease, background 160ms ease, transform 100ms ease;
+    }
+    .text-btn:hover { color: #0062c4; background: rgba(0,113,227,.08); }
+    .text-btn:active { transform: scale(.95); }
+    .overview-map-panel { overflow: hidden; border-radius: 22px; }
+    #allMap { height: min(68vh, 610px); }
+    .overview-selection { min-height: 74px; background: rgba(255,255,255,.92); }
+    .property-pin { background: #0071e3; font-family: inherit; }
+    .budget-side, .cost-box, .compare {
+      border-color: rgba(60,60,67,.12);
+      border-radius: 22px;
+      background: rgba(255,255,255,.82) !important;
+    }
+    .budget-side.on-campus { background: rgba(232,244,255,.8) !important; }
+    .calc-result {
+      border-radius: 22px;
+      background: linear-gradient(145deg, #1d1d1f, #323235);
+      box-shadow: 0 18px 40px rgba(0,0,0,.14);
+    }
+    footer { color: #a1a1a6; background: #1d1d1f; }
+    :focus-visible {
+      outline: 3px solid rgba(0,113,227,.55);
+      outline-offset: 3px;
+    }
+    @media (max-width: 760px) {
+      nav { min-height: 52px; }
+      .hero { min-height: 0; padding-top: 7.5rem; padding-bottom: 4rem; }
+      .hero::after { right: -8rem; bottom: -3rem; width: 25rem; }
+      .hero h1 { font-size: clamp(3rem, 14vw, 5rem); }
+      .hero-stats { max-width: none; }
+      main { width: min(100% - 1rem, 1320px); }
+      .section { border-radius: 25px; }
+      .mobile-dock {
+        inset: auto .65rem .65rem;
+        padding: .36rem;
+        border: 1px solid rgba(255,255,255,.72);
+        border-radius: 20px;
+        background: rgba(248,248,250,.78);
+        box-shadow: 0 16px 48px rgba(0,0,0,.16);
+        backdrop-filter: saturate(180%) blur(24px);
+        -webkit-backdrop-filter: saturate(180%) blur(24px);
+      }
+      .mobile-dock a { min-height: 44px; color: #515154; }
+      .mobile-dock a:hover, .mobile-dock a:focus-visible { color: #0071e3; background: rgba(0,113,227,.08); }
+    }
+    @media (max-width: 560px) {
+      .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-stat { min-height: 112px; border-radius: 20px; }
+      .section { padding: 2.75rem .85rem; }
+      .section-head h2 { font-size: clamp(2.2rem, 11vw, 3.2rem); }
+      .overview-selection { align-items: stretch; flex-direction: column; }
+      .overview-selection .btn { width: 100%; }
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      nav, .filters, .mobile-dock, .section, .hero-stat, .notice {
+        background: #fff !important;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+    }
+    @media (prefers-contrast: more) {
+      :root { --line: rgba(0,0,0,.48); }
+      nav, .filters, .mobile-dock, .section, .card { border-color: var(--line); }
+      .hero-copy, .section-head p, .address, .rent-detail { color: #3a3a3c; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero::after { display: none; }
+      .card:hover, .card.active, .hero-cta:hover, .btn:hover { transform: none; }
+    }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to housing dashboard</a>
   <header class="hero">
     <div class="announcement">Plan early for 2027–28 · Compare location, rent and the full-year cost</div>
-    <nav>
+    <nav aria-label="Primary navigation">
       <div class="brand"><span class="brand-mark">PSU</span><span>Housing Dashboard</span></div>
       <div><a href="#map-overview">Map</a><a href="#apartments">Apartments</a><a href="#calculator">Cost calculator</a><a href="#comparison">Compare</a></div>
     </nav>
@@ -1036,7 +1350,7 @@
         <div id="allMap" role="application" aria-label="Interactive map of 50 private properties near Penn State University Park"></div>
         <div class="overview-selection">
           <div><strong id="overviewTitle">50 properties near Penn State University Park</strong><span id="overviewDetail">Select any numbered pin to see property details.</span></div>
-          <button class="btn" id="resetMap">Show all properties</button>
+          <button class="btn" id="resetMap" type="button">Show all properties</button>
         </div>
       </div>
     </section>
@@ -1051,10 +1365,10 @@
           <label>Area<select id="area"><option value="">All areas</option></select></label>
           <label>Maximum price / student<select id="maxPrice"><option value="">Any price</option><option value="750">$750</option><option value="900">$900</option><option value="1100">$1,100</option><option value="1400">$1,400</option></select></label>
           <label>Furnishing<select id="furnished"><option value="">Any</option><option value="yes">Furnished</option><option value="no">Unfurnished</option><option value="mixed">Options / unclear</option></select></label>
-          <button class="btn" id="reset">Clear filters</button>
+          <button class="btn" id="reset" type="button">Clear filters</button>
         </div>
         <div class="listing-content">
-          <div class="results-bar"><span id="resultCount">50 properties</span><span>Choose “View on map” to locate a property below</span></div>
+          <div class="results-bar"><span id="resultCount" role="status" aria-live="polite">50 properties</span><span>Choose “View on map” to locate a property below</span></div>
           <div class="cards" id="cards"></div>
         </div>
       </div>
@@ -1096,7 +1410,7 @@
         <div class="calc-result">
           <div>
             <span style="color:#cfe1f4;font-weight:700">YOUR COST COMPARISON</span>
-            <div class="delta save" id="calcDelta">$674 below the dorm benchmark</div>
+            <div class="delta save" id="calcDelta" role="status" aria-live="polite">$674 below the dorm benchmark</div>
           </div>
           <table class="breakdown">
             <tr><td>Rent</td><td id="rentTotal">$9,600</td></tr>
@@ -1230,12 +1544,13 @@
     });
     function selectProperty(index) {
       const p = properties[index];
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       document.querySelectorAll(".card").forEach(el => el.classList.toggle("active", Number(el.dataset.index) === index));
-      overviewMap.setView([p.lat, p.lng], 18, {animate: false});
+      overviewMap.setView([p.lat, p.lng], 18, {animate: !reduceMotion});
       window.setTimeout(() => overviewMarkers[index].openPopup(), 100);
       document.querySelector("#overviewTitle").textContent = `#${index + 1} ${p.n}`;
       document.querySelector("#overviewDetail").textContent = `${p.c} · ${p.a}`;
-      document.querySelector("#map-overview").scrollIntoView({behavior:"smooth", block:"start"});
+      document.querySelector("#map-overview").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block:"start"});
     }
     function render() {
       const q = document.querySelector("#search").value.trim().toLowerCase();
@@ -1253,7 +1568,7 @@
           <div class="card-top"><div><span class="number">#${p.i + 1}</span><h3>${p.n}</h3></div><span class="price">${p.p === null ? "Call for price" : `From ~${fmt(p.p)}/student`}</span></div>
           <p class="address">${p.a}</p><p class="rent-detail">${p.r}</p>
           <div class="tags"><span class="tag green">${p.c}</span><span class="tag">${p.f === "yes" ? "Furnished" : p.f === "no" ? "Unfurnished" : "Options / verify"}</span><span class="tag amber">${p.u}</span></div>
-          <div class="card-actions"><button class="text-btn" data-map="${p.i}">View on map</button><a class="text-btn" href="${googleUrl(p.a)}" target="_blank" rel="noopener">Google Maps ↗</a><a class="text-btn" href="${p.s}" target="_blank" rel="noopener">Property site ↗</a></div>
+          <div class="card-actions"><button class="text-btn" type="button" data-map="${p.i}">View on map</button><a class="text-btn" href="${googleUrl(p.a)}" target="_blank" rel="noopener">Google Maps ↗</a><a class="text-btn" href="${p.s}" target="_blank" rel="noopener">Property site ↗</a></div>
         </article>`).join("") : `<div class="empty panel">No properties match these filters. Try increasing the price or clearing a filter.</div>`;
       cards.querySelectorAll("[data-map]").forEach(btn => btn.addEventListener("click", () => selectProperty(Number(btn.dataset.map))));
     }
