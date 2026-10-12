@@ -5,7 +5,8 @@ An interactive, static web application comparing Penn State on-campus housing ar
 ## Features
 
 - Search and filter 58 housing options: 8 Penn State on-campus housing areas and 50 private off-campus properties
-- Clustered interactive OpenStreetMap with color-coded campus and private-property pins
+- Clustered interactive OpenStreetMap with green campus pins, blue private-property pins, and neutral charcoal clusters
+- Housing tiles use the same green on-campus and blue off-campus category palette as the map
 - On-campus tiles with official 2026–27 lodging rates, meal-plan requirements, and Penn State housing links
 - Google Maps and leasing-site links in every map popup
 - Latest advertised rent with per-bed versus per-unit labeling

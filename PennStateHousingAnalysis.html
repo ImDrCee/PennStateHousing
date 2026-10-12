@@ -1255,6 +1255,18 @@
       box-shadow: 0 4px 14px rgba(18,128,92,.38);
       font-size: 9px;
     }
+    .marker-cluster-small,
+    .marker-cluster-medium,
+    .marker-cluster-large {
+      background: rgba(58,58,60,.22);
+    }
+    .marker-cluster-small div,
+    .marker-cluster-medium div,
+    .marker-cluster-large div {
+      color: #fff;
+      background: #3a3a3c;
+      font-weight: 750;
+    }
     .map-legend {
       display: flex;
       flex-wrap: wrap;
@@ -1269,6 +1281,7 @@
     .map-legend span { display: inline-flex; align-items: center; gap: .42rem; }
     .legend-dot { width: 10px; height: 10px; border-radius: 50%; background: #0071e3; }
     .legend-dot.campus { background: #12805c; }
+    .legend-dot.cluster { background: #3a3a3c; }
     .housing-type {
       display: inline-flex;
       width: fit-content;
@@ -1281,6 +1294,26 @@
       font-weight: 750;
     }
     .housing-type.off-campus { color: #005eb8; background: rgba(0,113,227,.09); }
+    .card.on-campus-card .card-visual {
+      background:
+        radial-gradient(circle at 72% 26%, rgba(255,255,255,.92), transparent 25%),
+        linear-gradient(145deg, #cfeee3, #edf8f3);
+    }
+    .card.off-campus-card .card-visual {
+      background:
+        radial-gradient(circle at 72% 26%, rgba(255,255,255,.92), transparent 25%),
+        linear-gradient(145deg, #d5ebff, #eef6ff);
+    }
+    .card.on-campus-card:hover,
+    .card.on-campus-card.active {
+      border-color: rgba(18,128,92,.38);
+      box-shadow: 0 22px 50px rgba(18,128,92,.12);
+    }
+    .card.off-campus-card:hover,
+    .card.off-campus-card.active {
+      border-color: rgba(0,113,227,.3);
+      box-shadow: 0 22px 50px rgba(0,113,227,.1);
+    }
     .budget-side, .cost-box, .compare {
       border-color: rgba(60,60,67,.12);
       border-radius: 22px;
@@ -1413,7 +1446,7 @@
       </div>
       <div class="overview-map-panel panel">
         <div id="allMap" role="application" aria-label="Interactive map of Penn State on-campus and private off-campus housing options"></div>
-        <div class="map-legend" aria-label="Map pin legend"><span><i class="legend-dot campus"></i>On-campus housing area</span><span><i class="legend-dot"></i>Off-campus property</span></div>
+        <div class="map-legend" aria-label="Map pin legend"><span><i class="legend-dot campus"></i>On-campus housing area</span><span><i class="legend-dot"></i>Off-campus property</span><span><i class="legend-dot cluster"></i>Grouped nearby pins</span></div>
         <div class="overview-selection">
           <div><strong id="overviewTitle">58 housing options near Penn State University Park</strong><span id="overviewDetail">Select a green campus pin or blue property pin for details.</span></div>
           <button class="btn" id="resetMap" type="button">Show all housing</button>
@@ -1701,7 +1734,7 @@
       );
       document.querySelector("#resultCount").textContent = `${filtered.length} ${filtered.length === 1 ? "housing option" : "housing options"}`;
       cards.innerHTML = filtered.length ? filtered.map(p => `
-        <article class="card" data-index="${p.i}">
+        <article class="card ${p.t === "campus" ? "on-campus-card" : "off-campus-card"}" data-index="${p.i}">
           <div class="card-visual visual-${p.i % 6}"><span class="visual-number">${optionLabel(p, p.i)}</span><span class="visual-area">${p.z}</span></div>
           <span class="housing-type ${p.t === "off" ? "off-campus" : ""}">${p.t === "campus" ? "On campus" : "Off campus"}</span>
           <div class="card-top"><div><span class="number">${optionLabel(p, p.i)}</span><h3>${p.n}</h3></div><span class="price">${p.t === "campus" ? "Official 2026–27 rate" : p.p === null ? "Call for price" : `From ~${fmt(p.p)}/student`}</span></div>
